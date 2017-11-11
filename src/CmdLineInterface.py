@@ -1,40 +1,39 @@
 ﻿from AppConfig import AppConfig
 
 class CmdLineInterface:
-    def printUsage(self):
-        print( "Usage: program (-d <device_num>) [--no-networking] [--headless] [--debug]")
+	def printUsage(self):
+		print( "Usage: program (-d <device_num>) [--no-networking] [--headless] [--debug]")
 
-    def __init__(self, inargs):
-        self.config = AppConfig()
-        self.cmdnum = 3
-        if (inargs[1] == "-d"):
-            self.config.setIsDevice(1)
-            idnum = (int)(inargs[2])
-            self.config.setDeviceID(idnum)
-        else:
-            self.printUsage()
+	def __init__(self, argv):
+		self.config = AppConfig()
 
-        if (len(inargs) > 3):
-            count = 0
-            for darg in inargs:
-                if (darg == "--no-networking"):
-                    self.config.setIsNetworking(0)
+		if len(argv) == 1:
+			self.printUsage()			
+			return
 
-                elif (darg == "--headless"):
-                    self.config.setIsHeadless(1)
+		if argv[1] == "-d":
+			self.config.setIsDevice(1)
+			self.config.setDeviceID(int(argv[2]))
+		else:
+			self.printUsage()
+			return
 
-                elif (darg == "--isDebug"):
-                    self.config.setIsDebug(1)
-                    
-                else:
-                    if (count > 2):
-                        print("noonon")
-                        self.printUsage()
-                        break
+		if len(argv) > 3:
+			for arg in range(3, len(argv)):
+				if arg == "--no-networking" or arg == "-n":
+					self.config.setIsNetworking(0)
 
-        else:
-            self.printUsage()
-			
-    def getConfig(self):
-        return self.config
+				elif arg == "--headless" or arg == "-h":
+					self.config.setIsHeadless(1)
+
+				elif arg == "--debug" or arg == "-d":
+					self.config.setIsDebug(1)
+    
+				else:
+					print("Invalid argument")
+					self.printUsage()
+					break
+
+	def getConfig(self):
+		return self.config
 	

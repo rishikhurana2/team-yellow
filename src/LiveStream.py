@@ -10,3 +10,10 @@ while True:
         break
 cv2.destroyWindow("preview")
 
+# I don't understand what this is for.
+# The video that is being displayed in being done in
+# the GUIManager and in the main.py file.
+
+#
+#
+#
