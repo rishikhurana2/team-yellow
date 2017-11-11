@@ -1,14 +1,10 @@
-﻿import cv2
+import cv2
 
 class VideoDevice:
-    camera = None
-    def startCapture(self, id):
-        self.camera = cv2.VideoCapture(id)
-
-    def getImage(self):
-        ret, image = self.camera.read()
-        return image
-
-
+	camera = None
+	def captureDeclare(self, camID):
+		self.camera = cv2.VideoCapture(camID)
 	
-
+	def getFrame(self):
+		ret,frame = self.camera.read()
+		return frame

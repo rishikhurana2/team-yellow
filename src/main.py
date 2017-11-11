@@ -12,14 +12,11 @@ import sys
 detector = TargetDetector()
 processor = TargetProcessor()
 camera = VideoDevice()
-cmdinp = ["main.py", "-d", "0", "--no-networking", "--isDebug"]
-
-interface = CmdLineInterface(cmdinp)
+interface = CmdLineInterface(sys.argv)
 config = interface.getConfig()
 gui = GUIManager()
 
-camera.startCapture(config.getDeviceID())
-
+camera.captureDeclare(config.getDeviceID())
 
 if(config.getIsDebug()):
     print("Camera is ready\n")
@@ -27,11 +24,9 @@ if(config.getIsDebug()):
 
 loop = 1
 
-while(cv2.waitKey(30) != 27):
-		
+while(cv2.waitKey(30) != 27):	
     print ("While Loop %s \n") % loop
-
-    image = camera.getImage()
+    image = camera.getFrame()
 		
     if(config.getIsDebug()):
         print("Image Read\n")
@@ -43,14 +38,11 @@ while(cv2.waitKey(30) != 27):
         
     
     if (detector.getFound() == True):
-        
-        print detected
-        
         target = Target(detected)
     	
         if(config.getIsDebug()):
             print("Image Processed by Target Detector\n")
-    
+
         if(config.getIsDebug()):
             print ("Image Being Processed by Target Processor\n")
     
@@ -58,38 +50,46 @@ while(cv2.waitKey(30) != 27):
         
         if(config.getIsDebug()):
             print("Target Loaded\n")
+
+        targetType = processor.getType()
     
-        distance = processor.findDistance()
+        if(config.getIsDebug()):
+            print("Distance Calculated\n")
+
+        distance = processor.getDistance()
     
         if(config.getIsDebug()):
             print("Distance Calculated\n")
     
-        azimuth = processor.findAzimuth()
+        azimuth = processor.getAzimuth()
     
         if(config.getIsDebug()):
             print("Azimuth Calculated\n")
     
-        altitude = processor.findAltitude()
+        altitude = processor.getAltitude()
     
         if(config.getIsDebug()):
             print("Altitude Calculated\n")
     
         if(config.getIsDebug()):
             print("Image Processed by TargetProcessor\n")
-    
+
+        typ = "type: %s" % targetType
         dis = "distance: %s" % distance
         azi = "azimuth: %s" % azimuth
         alt = "altitude: %s" % altitude
         
     else:
-        dis = "Not Found"
-        azi = "Not Found"
-        alt = "Not Found"
+	typ = "Not Found"
+        dis = "N/A"
+        azi = "N/A"
+        alt = "N/A"
     
     gui.setImage(image)
-    gui.setText(dis, 1)
-    gui.setText(azi, 2)
-    gui.setText(alt, 3)
+    gui.setText(typ, 1)
+    gui.setText(dis, 2)
+    gui.setText(azi, 3)
+    gui.setText(alt, 4)
     cv2.imshow("Targeting", gui.getImage())
     loop += 1
 
