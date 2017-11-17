@@ -7,7 +7,7 @@ class CmdLineInterface:
 	def __init__(self, argv):
 		self.config = AppConfig()
 
-		if len(argv) == 1:
+		if len(argv) == 1 or len(argv) == 2:
 			self.printUsage()			
 			return
 

@@ -12,7 +12,7 @@ class Target:
 		# May be errors here, Rishi please check if it works
 		#		
 		# Take out the 4 points of the rectangle
-		corners = cv2.boxPoints(rect):
+		corners = cv2.boxPoints(rect)
 		
 		# Place all 8 points into the initialized array
 		count = 0
@@ -57,9 +57,9 @@ class Target:
 		width = int(math.sqrt(((points[yValue[0]][1] - points[yValue[1]][1])**2) + ((points[yValue[0]][0] - points[yValue[1]][0])**2)))
 		height = int(math.sqrt(((points[xValue[0]][1] - points[xValue[1]][1])**2) + ((points[xValue[0]][0] - points[xValue[1]][0])**2)))
 
-		if width > height and abs(yValue[0]][1] - points[yValue[1]][1]) < width * 0.1:
+		if width > height and abs([yValue[0]][1] - points[yValue[1]][1]) < width * 0.1:
 			targetType = 0
-		if height > width and abs(xValue[0]][0] - points[xValue[1]][0]) < height * 0.1:
+		if height > width and abs([xValue[0]][0] - points[xValue[1]][0]) < height * 0.1:
 			targetType = 2
 		else:
 			targetType = 3
