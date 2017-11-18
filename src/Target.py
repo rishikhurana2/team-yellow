@@ -3,51 +3,56 @@ import math
 
 class Target:
 	def __init__(self, approx):
-		points = [0 for y in range(4)]
+		minX = temp[0][0][0]
+        maxX = temp[0][0][0]
+        minY = temp[0][0][1]
+        maxY = temp[0][0][1]
 		
-		for x in range(4):
-			points[x] = approx[x]
+		upperPoints = [[0 for y in range(2)] for x in range(0)]
+		rightPoints = [[0 for y in range(2)] for x in range(0)]
 		
-		# Find which ones are "pairs"
-		'''
-		xValue = []
-		yValue = []
-		for y in range(4):
-			for x in range(len(xValue) + 1):
-				if x == len(xValue):
-					xValue.insert(y, x)
-
-				if points[xValue[x]][0] < points[y][0]:
-					xValue.insert(y, x)
-
-			for x in range(len(yValue) + 1):
-				if x == len(yValue):
-					yValue.insert(y, x)
-
-				if points[yValue[x]][1] < points[y][1]:
-					yValue.insert(y, x)
-		'''
-
+		# H = 0, S = 1, V = 2
+		self.targetType = -1
 		self.center = [0, 0]
 		self.width = 0
 		self.height = 0
 		
-		# H = 0, S = 1, V = 2
-		self.targetType = -1
-		for x in range(4):
-			self.center[0] += int(points[x][0])
-			self.center[1] += int(points[x][1])
+		for point in approx:
+			self.center[0] += point[0][0]
+			self.center[1] += point[0][1]
+		
+			if point[0][0] > rightPoints[0][0]:
+				rightPoints[1][0] = rightPoints[0][0]
+				rightPoints[1][1] = rightPoints[0][1]
+			
+				rightPoints[0][0] = point[0][0]
+				rightPoints[0][1] = point[0][1]
+				
+			elif point[0][0] > rightPoints[1][0]:
+				rightPoints[1][0] = point[0][0]
+				rightPoints[1][1] = point[0][1]
+				
+			elif point[0][1] > upperPoints[0][1]:
+				upperPoints[1][0] = upperPoints[0][0]
+				upperPoints[1][1] = upperPoints[0][1]
 
-			if x == 3:
-				self.center[0] /= 4
-				self.center[1] /= 4
+				upperPoints[0][0] = point[0][0]
+				upperPoints[0][1] = point[0][1]
+			
+			elif point[0][1] > upperPoints[1][1]:
+				upperPoints[1][0] = point[0][0]
+				upperPoints[1][1] = point[0][1]
 
-		self.width = int(math.sqrt(((points[yValue[0]][1] - points[yValue[1]][1])**2) + ((points[yValue[0]][0] - points[yValue[1]][0])**2)))
-		self.height = int(math.sqrt(((points[xValue[0]][1] - points[xValue[1]][1])**2) + ((points[xValue[0]][0] - points[xValue[1]][0])**2)))
+		self.center[0] /= 4
+		self.center[1] /= 4
+		
+		
+		self.width = int(math.sqrt(((upperPoints[0][0] - upperPoints[1][0])**2) + ((upperPoints[0][1] - upperPoints[1][1])**2)))
+		self.height = int(math.sqrt(((rightPoints[0][0] - rightPoints[1][0])**2) + ((rightPoints[0][1] - rightPoints[1][1])**2)))
 
-		if width > height and abs(points[yValue[0]][1] - points[yValue[1]][1]) < width * 0.1:
+		if width > height and abs(upperPoints[0][1] - upperPoints[1][1]) < self.width * 0.1:
 			self.targetType = 0
-		if height > width and abs(points[xValue[0]][0] - points[xValue[1]][0]) < height * 0.1:
+		if height > width and abs(rightPoints[0][0] - rightPoints[1][0]) < self.height * 0.1:
 			self.targetType = 2
 		else:
 			self.targetType = 3
