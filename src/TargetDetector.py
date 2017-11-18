@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from VideoDevice import VideoDevice
 
 class TargetDetector:
 	def threshold(self, image):
