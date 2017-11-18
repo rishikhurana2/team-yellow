@@ -24,55 +24,46 @@ if(config.getIsDebug()):
 
 loop = 1
 
-while(cv2.waitKey(30) != 27):	
+while cv2.waitKey(30) != 27:	
 	print ("While Loop %s \n")
 	image = camera.getFrame()
 		
-	if(config.getIsDebug()):
+	if config.getIsDebug():
 		print("Image Read\n")
 
-	detected = detector.TargetDetect(image)
+	detected = detector.contour(detector.threshold(image))
     
-	if(config.getIsDebug()):
+	if config.getIsDebug():
 		print("Image Analyzed\n")
         
-    
-#	if (detector.getFound() == True):
-#		target = Target(detected)
-    	
-		if(config.getIsDebug()):
-			print("Image Processed by Target Detector\n")
+	if detector.getFound() == True:
+		processor = TargetProcessor(detected)
 
-		if(config.getIsDebug()):
-			print ("Image Being Processed by Target Processor\n")
-
-		processor.loadTarget(target)
-        
-		if(config.getIsDebug()):
-			print("Target Loaded\n")
+		if config.getIsDebug():
+			print ("Image Processed by Target Processor\n")
 
 		targetType = processor.getType()
     
-		if(config.getIsDebug()):
-			print("Distance Calculated\n")
+		if config.getIsDebug():
+			print("Target Type Calculated\n")
 
 		distance = processor.getDistance()
     
-		if(config.getIsDebug()):
+		if config.getIsDebug():
 			print("Distance Calculated\n")
     
 		azimuth = processor.getAzimuth()
     
-		if(config.getIsDebug()):
+		if config.getIsDebug():
 			print("Azimuth Calculated\n")
     
 		altitude = processor.getAltitude()
     
-		if(config.getIsDebug()):
+		if config.getIsDebug():
 			print("Altitude Calculated\n")
     
-		if(config.getIsDebug()):
-			print("Image Processed by TargetProcessor\n")
+		if config.getIsDebug():
+			print("Finished\n")
 
 		typ = "type: %s" % targetType
 		dis = "distance: %s" % distance

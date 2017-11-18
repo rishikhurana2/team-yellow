@@ -5,7 +5,7 @@ from Target import Target
 
 class TargetProcessor:
 
-	def __init__(self, contour):
+	def __init__(self, approx):
 		imgWidth = 0
 		imgHeight = 0
 		dist = 0
@@ -13,25 +13,25 @@ class TargetProcessor:
 		altitude = 0
 		targetType = -1
 
-		RectHeight = 0.02
-		RectWidth = 0.05
+		rectHeight = 0.02
+		rectWidth = 0.05
 		focalLen = 480
 		horizCent = 240
 		vertiCent = 320
     
-		target = Target(contour)
+		self.target = Target(approx)
 
 	def loadTarget(self):
 		imgWidth = self.target.getWidth()
 		imgHeight = self.target.getHeight()
 		imgCenter = self.target.getCenter()
-		RectcentX = imgCenter[0]
-		RectcentY = imgCenter[1]
-		offsetX = float(RectcentX - horizCent)
-		offsetY = float(-1*(RectcentY - vertiCent))
+		rectCentX = imgCenter[0]
+		rectCentY = imgCenter[1]
+		offsetX = float(rectCentX - horizCent)
+		offsetY = float(-1 * (rectCentY - vertiCent))
 		targetType = self.target.getType()
 
-		dist = self.RectWidth * self.focalLen / imgWidth
+		dist = self.rectWidth * self.focalLen / imgWidth
 		azimuth = np.arctan(offsetX / self.focalLen) * 180 / math.pi
 		altitude = np.arctan(offsetY / self.focalLen) * 180 / math.pi
 
