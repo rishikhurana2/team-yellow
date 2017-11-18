@@ -3,12 +3,13 @@ import math
 
 class Target:
 	def __init__(self, approx):
-		points = [0 for y in xrange(4)]
+		points = [0 for y in range(4)]
 		
-		for x in xrange(4):
+		for x in range(4):
 			points[x] = approx[x]
 		
 		# Find which ones are "pairs"
+		'''
 		xValue = []
 		yValue = []
 		for y in range(4):
@@ -25,6 +26,7 @@ class Target:
 
 				if points[yValue[x]][1] < points[y][1]:
 					yValue.insert(y, x)
+		'''
 
 		self.center = [0, 0]
 		self.width = 0
@@ -33,8 +35,8 @@ class Target:
 		# H = 0, S = 1, V = 2
 		self.targetType = -1
 		for x in range(4):
-			self.center[0] += points[x][0]
-			self.center[1] += points[x][1]
+			self.center[0] += int(points[x][0])
+			self.center[1] += int(points[x][1])
 
 			if x == 3:
 				self.center[0] /= 4
