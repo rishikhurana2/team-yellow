@@ -5,6 +5,7 @@ from TargetProcessor import TargetProcessor
 from VideoDevice import VideoDevice
 from GUIManager import GUIManager
 from AppConfig import AppConfig
+from Network import Network
 
 import cv2
 import sys
@@ -16,6 +17,13 @@ interface = CmdLineInterface(sys.argv)
 config = interface.getConfig()
 gui = GUIManager()
 processor = TargetProcessor()
+
+network = None
+
+if config.getIsNetworking():
+    global network
+    network = Network()
+    network.userServer()
 
 camera.captureDeclare(config.getDeviceID())
 
@@ -70,6 +78,10 @@ while cv2.waitKey(30) != 27:
 		dis = "distance: %s" % distance
 		azi = "azimuth: %s" % azimuth
 		alt = "altitude: %s" % altitude
+		
+		if config.getIsNetworking():
+		    network.setType(str(targetType))
+		    network.setAzimuth(str(azimuth))
         
 	else:
 		typ = "Not Found"
