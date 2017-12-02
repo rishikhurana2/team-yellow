@@ -15,6 +15,7 @@ camera = VideoDevice()
 interface = CmdLineInterface(sys.argv)
 config = interface.getConfig()
 gui = GUIManager()
+processor = TargetProcessor()
 
 camera.captureDeclare(config.getDeviceID())
 
@@ -25,7 +26,7 @@ if(config.getIsDebug()):
 loop = 1
 
 while cv2.waitKey(30) != 27:	
-	print ("While Loop %s \n")
+	print ("While Loop: " + str(loop))
 	image = camera.getFrame()
 		
 	if config.getIsDebug():
@@ -37,7 +38,7 @@ while cv2.waitKey(30) != 27:
 		print("Image Analyzed\n")
         
 	if detector.getFound() == True:
-		processor = TargetProcessor(detected)
+		processor.loadTarget(detected)
 
 		if config.getIsDebug():
 			print ("Image Processed by Target Processor\n")
