@@ -1,13 +1,26 @@
+'''Target Attributes
+
+Calculates width, height, and the coordinates for the center of the target.
+'''
+
 import cv2
 import math
 
 class Target:
 	def __init__(self, approx):
+		'''Calculates all attributes
+		
+		First find the two points at the top of the target and the right of the target.
+		Then use Pythagorean Theorem to calculate width and height. We use Pythagorean Theorem to calculate
+		distance between two points in case the rectangle is slanted.
+		To find the center coordinate we just take the average of all of the X and Y coordinates.
+		'''
+	
 		upperPoints = [[0 for y in range(2)] for x in range(2)]
 		rightPoints = [[0 for y in range(2)] for x in range(2)]
 		
-		# H = 0, S = 1, V = 2
-		self.targetType = -1
+		self.targetType = -1 # Horizontal = 0, Spinning = 1, Vertical = 2
+		
 		self.center = [0, 0]
 		self.width = 0
 		self.height = 0
@@ -51,15 +64,27 @@ class Target:
 		else:
 			self.targetType = 1
 
+
 	def getType(self):
+	    '''Returns target type'''
+	
 		return self.targetType
 
+
 	def getWidth(self):
+	    '''Returns width of target'''
+	
 		return self.width
 
+
 	def getHeight(self):
+	    '''Returns height of target'''
+	
 		return self.height
 
+
 	def getCenter(self):
+	    '''Returns center coordinate of target'''
+	
 		return self.center
 		
