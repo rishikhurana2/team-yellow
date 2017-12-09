@@ -30,14 +30,14 @@ class CmdLineInterface:
 			return
 
 		if len(argv) > 3:
-			for arg in range(3, len(argv)):
-				if arg == "--no-networking" or arg == "-n":
+			for x in range(3, len(argv)):
+				if argv[x] == "--no-networking" or argv[x] == "-n":
 					self.config.setIsNetworking(0)
 
-				elif arg == "--headless" or arg == "-h":
+				elif argv[x] == "--headless" or argv[x] == "-h":
 					self.config.setIsHeadless(1)
 
-				elif arg == "--debug" or arg == "-d":
+				elif argv[x] == "--debug" or argv[x] == "-d":
 					self.config.setIsDebug(1)
 
 				else:
