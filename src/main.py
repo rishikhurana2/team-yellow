@@ -22,7 +22,6 @@ from TargetProcessor import TargetProcessor
 from VideoDevice import VideoDevice
 
 
-gui = GUIManager()
 interface = CmdLineInterface(sys.argv)
 detector = TargetDetector()
 processor = TargetProcessor()
@@ -41,10 +40,12 @@ if config.getIsNetworking():
 
 camera.cameraDeclare(config.getDeviceID())
 
+if(not config.getIsHeadless()):
+	gui = GUIManager()
+	gui.threshWindow()
 
 if(config.getIsDebug()):
 	print("Camera is ready\n")
-	gui.threshWindow()
 
 
 loop = 1
@@ -102,12 +103,13 @@ while cv2.waitKey(30) != 27:
 		azi = "N/A"
 		alt = "N/A"
 
-	gui.setImage(image)
-	gui.setText(typ, 1)
-	gui.setText(dis, 2)
-	gui.setText(azi, 3)
-	gui.setText(alt, 4)
-	cv2.imshow("Targeting", gui.getImage())
+	if(not config.getIsHeadless()):
+		gui.setImage(image)
+		gui.setText(typ, 1)
+		gui.setText(dis, 2)
+		gui.setText(azi, 3)
+		gui.setText(alt, 4)
+		cv2.imshow("Targeting", gui.getImage())
 	
 	loop += 1
 
