@@ -66,25 +66,25 @@ class Target:
 
 
 	def getType(self):
-	    '''Returns target type'''
+		'''Returns target type'''
 	
 		return self.targetType
 
 
 	def getWidth(self):
-	    '''Returns width of target'''
+		'''Returns width of target'''
 	
 		return self.width
 
 
 	def getHeight(self):
-	    '''Returns height of target'''
+		'''Returns height of target'''
 	
 		return self.height
 
 
 	def getCenter(self):
-	    '''Returns center coordinate of target'''
+		'''Returns center coordinate of target'''
 	
 		return self.center
 		

@@ -8,14 +8,14 @@ from AppConfig import AppConfig
 
 class CmdLineInterface:
 	def printUsage(self):
-	    '''Prints out the format for the command line input'''
-	    
+		'''Prints out the format for the command line input'''
+
 		print( "Usage: program (-d <device_num>) [--no-networking] [--headless] [--debug]")
 
 
 	def __init__(self, argv):
-	    '''Parsing the input command line array and inputting it into the AppConfig object'''
-	    
+		'''Parsing the input command line array and inputting it into the AppConfig object'''
+
 		self.config = AppConfig()
 
 		if len(argv) == 1 or len(argv) == 2:
@@ -39,7 +39,7 @@ class CmdLineInterface:
 
 				elif arg == "--debug" or arg == "-d":
 					self.config.setIsDebug(1)
-    
+
 				else:
 					print("Invalid argument")
 					self.printUsage()
@@ -47,7 +47,7 @@ class CmdLineInterface:
 
 
 	def getConfig(self):
-	    '''Returns the configured AppConfig object'''
+		'''Returns the configured AppConfig object'''
 	
 		return self.config
 	

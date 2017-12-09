@@ -23,7 +23,7 @@ class TargetProcessor:
 		Takes an input array of points and sends it to the Target object.
 		Then takes the width and height from the target object and calculates Distance, Azimuth, and Altitude.
 		'''
-	    
+
 		self.dist = 0
 		self.azimuth = 0
 		self.altitude = 0
