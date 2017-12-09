@@ -41,7 +41,7 @@ while cv2.waitKey(30) != 27:
 		print("Image Read\n")
 
 	detected = detector.contour(detector.threshold(image))
-    
+	
 	if config.getIsDebug():
 		print("Image Analyzed\n")
         
