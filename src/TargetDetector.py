@@ -18,7 +18,7 @@ class TargetDetector:
 		THRESHOLD_MIN = np.array([100,0,100],np.uint8)
 		THRESHOLD_MAX = np.array([255,255,255],np.uint8)
 		img = cv2.inRange(image, THRESHOLD_MIN, THRESHOLD_MAX)
-		cv2.imshow("Threshed", img)
+		#cv2.imshow("Threshed", img)
 		return img
 
 		

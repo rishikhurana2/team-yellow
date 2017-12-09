@@ -37,7 +37,6 @@ if config.getIsNetworking():
 	network = Network()
 	network.userServer()
 
-
 camera.cameraDeclare(config.getDeviceID())
 
 if(not config.getIsHeadless()):
