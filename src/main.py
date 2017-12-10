@@ -37,7 +37,6 @@ if config.getIsNetworking():
 	network = Network()
 	network.userServer()
 
-
 camera.cameraDeclare(config.getDeviceID())
 
 if(not config.getIsHeadless()):
@@ -77,7 +76,6 @@ while cv2.waitKey(30) != 27:
 		if config.getIsDebug():
 			print("Target Type Calculated\n")
 
-		distance = processor.getDistance()
 		if config.getIsDebug():
 			print("Distance Calculated\n")
 			
@@ -85,7 +83,6 @@ while cv2.waitKey(30) != 27:
 		if config.getIsDebug():
 			print("Azimuth Calculated\n")
 
-		altitude = processor.getAltitude()
 		if config.getIsDebug():
 			print("Altitude Calculated\n")
 
@@ -93,9 +90,7 @@ while cv2.waitKey(30) != 27:
 			print("Finished\n")
 
 		typ = "type: %s" % targetType
-		dis = "distance: %s" % distance
 		azi = "azimuth: %s" % azimuth
-		alt = "altitude: %s" % altitude
 		
 		if config.getIsNetworking():
 			network.setType(str(targetType))
@@ -103,16 +98,12 @@ while cv2.waitKey(30) != 27:
   
 	else:
 		typ = "Not Found"
-		dis = "N/A"
 		azi = "N/A"
-		alt = "N/A"
 
 	if(not config.getIsHeadless()):
 		gui.setImage(image)
-		gui.setText(typ, 1)
-		gui.setText(dis, 2)
+		gui.setText(typ, 2)
 		gui.setText(azi, 3)
-		gui.setText(alt, 4)
 		cv2.imshow("Targeting", gui.getImage())
 	
 	loop += 1

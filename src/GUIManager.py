@@ -3,7 +3,8 @@
 Manages all graphical outputs.
 '''
 
-﻿import cv2
+
+import cv2
 
 
 class GUIManager:
