@@ -41,7 +41,6 @@ camera.cameraDeclare(config.getDeviceID())
 
 if(not config.getIsHeadless()):
 	gui = GUIManager()
-	gui.threshWindow()
 
 if(config.getIsDebug()):
 	print("Camera is ready\n")
@@ -57,10 +56,7 @@ while cv2.waitKey(30) != 27:
 		print("Image Read\n")
 
 	detected = detector.contour(detector.threshold(image))
-<<<<<<< HEAD
-	
-=======
->>>>>>> e26e1934cac633621029b914f2421be94febae75
+
 	if config.getIsDebug():
 		print("Image Analyzed\n")
 
