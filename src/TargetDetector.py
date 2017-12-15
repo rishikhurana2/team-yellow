@@ -47,18 +47,35 @@ class TargetDetector:
 			area = cv2.contourArea(approx)
 			if len(approx) == 4 and area > 300:
 				return approx
+				upperPoints = [[0 for y in range(2)] for x in range(2)]
+				rightPoints = [[0 for y in range(2)] for x in range(2)]
+
 				for i in approx:
-					if i[0][0] > maxX:
-						maxX = i[0][0]
-					if i[0][0] < minX:
-						minX = i[0][0]
-					if i[0][1] > maxY:
-						maxY = i[0][1]
-					if i[0][1] < minY:
-						minY = i[0][1]
-				width = math.sqrt(math.abs((i[0][0]-i[0][0])**2 + math.abs((i[0][1]-i[0][1])**2))
-				height = math.sqrt(math.abs((i[0][0]-i[0][0])**2 + abs((i[0][1]-i[0][1])**2))
-				if (width/height == 4 or width/height == 5):
+					if i[0][0] > rightPoints[0][0]:
+						rightPoints[1][0] = rightPoints[0][0]
+						rightPoints[1][1] = rightPoints[0][1]
+
+						rightPoints[0][0] = point[0][0]
+						rightPoints[0][1] = point[0][1]
+
+					elif i[0][0] > rightPoints[1][0]:
+						rightPoints[1][0] = point[0][0]
+						rightPoints[1][1] = point[0][1]
+					if point[0][1] > upperPoints[0][1]:
+						upperPoints[1][0] = upperPoints[0][0]
+						upperPoints[1][1] = upperPoints[0][1]
+
+						upperPoints[0][0] = point[0][0]
+						upperPoints[0][1] = point[0][1]
+
+					elif point[0][1] > upperPoints[1][1]:
+						upperPoints[1][0] = point[0][0]
+						upperPoints[1][1] = point[0][1]
+
+				width = int(math.sqrt(((upperPoints[0][0]-upperPoints[1][0])**2) + ((upperPoints[0][1] - upperPoints[1][1])**2)))
+				height = int(math.sqrt(((rightPoints[0][0]-rightPoints[1][0])**2) + ((rightPoints[0][1] - rightPoints[1][1])**2)))
+
+				if (width/height == 4 or width/height == 0.25):
 					self.found = True
         def getFound(self):
         #Returns if the target is found or not'''
