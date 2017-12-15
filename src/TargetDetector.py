@@ -8,10 +8,6 @@ import numpy as np
 import math
 
 class TargetDetector:
-	def getFound(self):
-	'''Returns if the target is found or not'''
-
-		return self.found
 
 	def threshold(self, image):
 		'''Thresholds an input image'''
@@ -29,12 +25,11 @@ class TargetDetector:
 		
 	def contour(self, image):
 		'''Finds where the target is located.
-		
+
 		Finds contours in the thresholded image then find the most accurate contour through a series of filters.
 		Filters based on numer of corners, size of contour, and corner angles.
 		'''
 
-		global img
 		maxX = 0
 		maxY = 0
 		minX = 10000
@@ -51,18 +46,23 @@ class TargetDetector:
 			approx = cv2.approxPolyDP(cont, 0.01 * cv2.arcLength(cont, True), True)
 			area = cv2.contourArea(approx)
 			if len(approx) == 4 and area > 300:
-				self.found = True
 				return approx
+				for i in approx:
+					if i[0][0] > maxX:
+						maxX = i[0][0]
+					if i[0][0] < minX:
+						minX = i[0][0]
+					if i[0][1] > maxY:
+						maxY = i[0][1]
+					if i[0][1] < minY:
+						minY = i[0][1]
+				width = math.sqrt(math.abs((i[0]-i[0])**2 + math.abs((i[0]-i[0])**2))
+				height = math.sqrt(math.abs((i[0]-i[0])**2 + abs((i[1]-i[1])**2))
+				if (width/height == 4 or width/height == 5):
+					self.found = True
+        def getFound(self):
+        #Returns if the target is found or not'''
 
-				if i[0][0] > maxX:
-					maxX = i[0][0]
-				if i[0][0] < minX:
-					minX = i[0][0]
-				if i[0][1] > maxY:
-					maxY = i[0][1]
-				if i[0][1] < minY:
-					minY = i[0][1]
-				width = math.sqrt(math.abs((maxX[[0]][0]-minX[[0]][0])**2 + math.abs((maxX[0][[0]]-minX[0][[0]])**2))
-				height = math.sqrt(math.abs((maxY[[0]][1]-minY[[0]][1])**2 + abs((maxY[0][[1]]-minY[0][[1]])**2))
-				if (width/height == 2 or width/height == 5):
-					getFound()
+                return self.found
+
+
