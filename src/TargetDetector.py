@@ -56,8 +56,8 @@ class TargetDetector:
 						maxY = i[0][1]
 					if i[0][1] < minY:
 						minY = i[0][1]
-				width = math.sqrt(math.abs((i[0]-i[0])**2 + math.abs((i[0]-i[0])**2))
-				height = math.sqrt(math.abs((i[0]-i[0])**2 + abs((i[1]-i[1])**2))
+				width = math.sqrt(math.abs((i[0][0]-i[0][0])**2 + math.abs((i[0][1]-i[0][1])**2))
+				height = math.sqrt(math.abs((i[0][0]-i[0][0])**2 + abs((i[0][1]-i[0][1])**2))
 				if (width/height == 4 or width/height == 5):
 					self.found = True
         def getFound(self):
