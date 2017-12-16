@@ -16,8 +16,8 @@ class Target:
 		To find the center coordinate we just take the average of all of the X and Y coordinates.
 		'''
 	
-		upperPoints = [[0 for y in range(2)] for x in range(2)]
-		rightPoints = [[0 for y in range(2)] for x in range(2)]
+		self.upperPoints = [[0 for y in range(2)] for x in range(2)]
+		self.rightPoints = [[0 for y in range(2)] for x in range(2)]
 		
 		self.targetType = -1 # Horizontal = 0, Spinning = 1, Vertical = 2
 		
@@ -29,37 +29,37 @@ class Target:
 			self.center[0] += point[0][0]
 			self.center[1] += point[0][1]
 		
-			if point[0][0] > rightPoints[0][0]:
-				rightPoints[1][0] = rightPoints[0][0]
-				rightPoints[1][1] = rightPoints[0][1]
+			if point[0][0] > self.rightPoints[0][0]:
+				self.rightPoints[1][0] = self.rightPoints[0][0]
+				self.rightPoints[1][1] = self.rightPoints[0][1]
 			
-				rightPoints[0][0] = point[0][0]
-				rightPoints[0][1] = point[0][1]
+				self.rightPoints[0][0] = point[0][0]
+				self.rightPoints[0][1] = point[0][1]
 				
-			elif point[0][0] > rightPoints[1][0]:
-				rightPoints[1][0] = point[0][0]
-				rightPoints[1][1] = point[0][1]
+			elif point[0][0] > self.rightPoints[1][0]:
+				self.rightPoints[1][0] = point[0][0]
+				self.rightPoints[1][1] = point[0][1]
 				
-			if point[0][1] > upperPoints[0][1]:
-				upperPoints[1][0] = upperPoints[0][0]
-				upperPoints[1][1] = upperPoints[0][1]
+			if point[0][1] > self.upperPoints[0][1]:
+				self.upperPoints[1][0] = self.upperPoints[0][0]
+				self.upperPoints[1][1] = self.upperPoints[0][1]
 
-				upperPoints[0][0] = point[0][0]
-				upperPoints[0][1] = point[0][1]
+				self.upperPoints[0][0] = point[0][0]
+				self.upperPoints[0][1] = point[0][1]
 			
-			elif point[0][1] > upperPoints[1][1]:
-				upperPoints[1][0] = point[0][0]
-				upperPoints[1][1] = point[0][1]
+			elif point[0][1] > self.upperPoints[1][1]:
+				self.upperPoints[1][0] = point[0][0]
+				self.upperPoints[1][1] = point[0][1]
 
 		self.center[0] /= 4
 		self.center[1] /= 4
 		
-		self.width = int(math.sqrt(((upperPoints[0][0] - upperPoints[1][0])**2) + ((upperPoints[0][1] - upperPoints[1][1])**2)))
-		self.height = int(math.sqrt(((rightPoints[0][0] - rightPoints[1][0])**2) + ((rightPoints[0][1] - rightPoints[1][1])**2)))
+		self.width = int(math.sqrt(((self.upperPoints[0][0] - self.upperPoints[1][0])**2) + ((self.upperPoints[0][1] - self.upperPoints[1][1])**2)))
+		self.height = int(math.sqrt(((self.rightPoints[0][0] - self.rightPoints[1][0])**2) + ((self.rightPoints[0][1] - self.rightPoints[1][1])**2)))
 
-		if self.width > self.height and abs(upperPoints[0][1] - upperPoints[1][1]) < self.width * 0.1:
+		if self.width > self.height and abs(self.upperPoints[0][1] - self.upperPoints[1][1]) < self.width * 0.1:
 			self.targetType = 0
-		elif self.height > self.width and abs(rightPoints[0][0] - rightPoints[1][0]) < self.height * 0.1:
+		elif self.height > self.width and abs(self.rightPoints[0][0] - self.rightPoints[1][0]) < self.height * 0.1:
 			self.targetType = 2
 		else:
 			self.targetType = 1

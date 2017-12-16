@@ -15,9 +15,8 @@ class TargetDetector:
 		global img
 		img = image
 		image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
-		THRESHOLD_MIN = np.array([100,0,100],np.uint8)
-		THRESHOLD_MAX = np.array([255,255,255],np.uint8)
+		THRESHOLD_MIN = np.array([100,51,175],np.uint8)
+		THRESHOLD_MAX = np.array([150,207,255],np.uint8)
 		img = cv2.inRange(image, THRESHOLD_MIN, THRESHOLD_MAX)
 		cv2.imshow("Threshed Image", img)
 		return img
@@ -30,11 +29,6 @@ class TargetDetector:
 		Filters based on numer of corners, size of contour, and corner angles.
 		'''
 
-		maxX = 0
-		maxY = 0
-		minX = 10000
-		minY = 10000
-
 		self.found = False
 		count = -1
 
@@ -42,11 +36,10 @@ class TargetDetector:
 
 		for cont in contours:
 			count += 1
-
 			approx = cv2.approxPolyDP(cont, 0.01 * cv2.arcLength(cont, True), True)
 			area = cv2.contourArea(approx)
 			if len(approx) == 4 and area > 300:
-				return approx
+
 				upperPoints = [[0 for y in range(2)] for x in range(2)]
 				rightPoints = [[0 for y in range(2)] for x in range(2)]
 
@@ -55,31 +48,37 @@ class TargetDetector:
 						rightPoints[1][0] = rightPoints[0][0]
 						rightPoints[1][1] = rightPoints[0][1]
 
-						rightPoints[0][0] = point[0][0]
-						rightPoints[0][1] = point[0][1]
+						rightPoints[0][0] = i[0][0]
+						rightPoints[0][1] = i[0][1]
 
 					elif i[0][0] > rightPoints[1][0]:
-						rightPoints[1][0] = point[0][0]
-						rightPoints[1][1] = point[0][1]
-					if point[0][1] > upperPoints[0][1]:
+						rightPoints[1][0] = i[0][0]
+						rightPoints[1][1] = i[0][1]
+
+					if i[0][1] > upperPoints[0][1]:
 						upperPoints[1][0] = upperPoints[0][0]
 						upperPoints[1][1] = upperPoints[0][1]
 
-						upperPoints[0][0] = point[0][0]
-						upperPoints[0][1] = point[0][1]
+						upperPoints[0][0] = i[0][0]
+						upperPoints[0][1] = i[0][1]
 
-					elif point[0][1] > upperPoints[1][1]:
-						upperPoints[1][0] = point[0][0]
-						upperPoints[1][1] = point[0][1]
+					elif i[0][1] > upperPoints[1][1]:
+						upperPoints[1][0] = i[0][0]
+						upperPoints[1][1] = i[0][1]
 
 				width = int(math.sqrt(((upperPoints[0][0]-upperPoints[1][0])**2) + ((upperPoints[0][1] - upperPoints[1][1])**2)))
 				height = int(math.sqrt(((rightPoints[0][0]-rightPoints[1][0])**2) + ((rightPoints[0][1] - rightPoints[1][1])**2)))
-
-				if (width/height == 4 or width/height == 0.25):
+				print(width)
+				print(height)
+				if (width/height > 3.5 and width/height < 4.5):
 					self.found = True
-        def getFound(self):
-        #Returns if the target is found or not'''
+				elif (height/width > 0.20 and height/width < 0.30):
+					self.found = True
 
-                return self.found
+				return approx
+
+	def getFound(self):
+	#Returns if the target is found or not'''
+		return self.found
 
 

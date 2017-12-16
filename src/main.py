@@ -48,8 +48,8 @@ if(config.getIsDebug()):
 
 loop = 1
 
-while cv2.waitKey(30) != 27:	
-	print ("While Loop: " + str(loop))
+while cv2.waitKey(30) != 27:
+	#print ("While Loop: " + str(loop))
 
 	image = camera.getFrame()
 	if config.getIsDebug():
@@ -67,7 +67,6 @@ while cv2.waitKey(30) != 27:
 		processor.loadTarget(detected)
 		if config.getIsDebug():
 			print ("Image Processed by Target Processor\n")
-
 		targetType = processor.getType()
 		if config.getIsDebug():
 			print("Target Type Calculated\n")
@@ -84,7 +83,6 @@ while cv2.waitKey(30) != 27:
 
 		if config.getIsDebug():
 			print("Finished\n")
-
 		typ = "type: %s" % targetType
 		azi = "azimuth: %s" % azimuth
 		
